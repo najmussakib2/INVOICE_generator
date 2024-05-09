@@ -12,8 +12,8 @@ const today = date.toLocaleDateString('en-GB', {
 
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [discount, setDiscount] = useState('');
-  const [tax, setTax] = useState('');
+  const [deliveryCharge, setDeliveryCharge] = useState('');
+  const [paid, setPaid] = useState('');
   const [invoiceNumber, setInvoiceNumber] = useState(1);
   const [cashierName, setCashierName] = useState('');
   const [customerName, setCustomerName] = useState('');
@@ -84,9 +84,11 @@ const InvoiceForm = () => {
       return prev + Number(curr.price * Math.floor(curr.qty));
     else return prev;
   }, 0);
-  const taxRate = (tax * subtotal) / 100;
-  const discountRate = (discount * subtotal) / 100;
-  const total = subtotal - discountRate + taxRate;
+  
+  const deliCharge = parseInt(deliveryCharge);
+  const paidAmount = parseInt(paid);
+  const total = subtotal + deliCharge;
+  const due = total - paidAmount;
 
   return (
     <form
@@ -155,8 +157,9 @@ const InvoiceForm = () => {
           <thead>
             <tr className="border-b border-gray-900/10 text-sm md:text-base">
               <th>ITEM</th>
-              <th>QTY</th>
+              <th className="text-center">QTY</th>
               <th className="text-center">PRICE</th>
+              <th className="text-center">AMOUNT</th>
               <th className="text-center">ACTION</th>
             </tr>
           </thead>
@@ -187,21 +190,27 @@ const InvoiceForm = () => {
             <span>${subtotal.toFixed(2)}</span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
-            <span className="font-bold">Discount:</span>
+            <span className="font-bold">Delivery Charge:</span>
             <span>
-              ({discount || '0'}%)${discountRate.toFixed(2)}
+              ${isNaN(deliCharge) ? "0.00" :deliCharge.toFixed(2) || "0.00"}
             </span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
-            <span className="font-bold">Tax:</span>
+            <span className="font-bold">Total:</span>
             <span>
-              ({tax || '0'}%)${taxRate.toFixed(2)}
+              ${isNaN(total) ? "0.00" : total.toFixed(2)}
+            </span>
+          </div>
+          <div className="flex w-full justify-between md:w-1/2">
+            <span className="font-bold">Paid Amount:</span>
+            <span>
+              ${isNaN(paidAmount) ? "0.00" :paidAmount.toFixed(2) || "0.00"}
             </span>
           </div>
           <div className="flex w-full justify-between border-t border-gray-900/10 pt-2 md:w-1/2">
-            <span className="font-bold">Total:</span>
+            <span className="font-bold">Due:</span>
             <span className="font-bold">
-              ${total % 1 === 0 ? total : total.toFixed(2)}
+              ${isNaN(due) ? "0.00" : due.toFixed(2)}
             </span>
           </div>
         </div>
@@ -222,8 +231,9 @@ const InvoiceForm = () => {
               cashierName,
               customerName,
               subtotal,
-              taxRate,
-              discountRate,
+              paidAmount,
+              due,
+              deliCharge,
               total,
             }}
             items={items}
@@ -232,7 +242,7 @@ const InvoiceForm = () => {
           <div className="space-y-4 py-2">
             <div className="space-y-2">
               <label className="text-sm font-bold md:text-base" htmlFor="tax">
-                Tax rate:
+                Delivery Charge:
               </label>
               <div className="flex items-center">
                 <input
@@ -243,11 +253,11 @@ const InvoiceForm = () => {
                   min="0.01"
                   step="0.01"
                   placeholder="0.0"
-                  value={tax}
-                  onChange={(event) => setTax(event.target.value)}
+                  value={deliveryCharge}
+                  onChange={(event) => setDeliveryCharge(event.target.value)}
                 />
                 <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm">
-                  %
+                  $
                 </span>
               </div>
             </div>
@@ -256,7 +266,7 @@ const InvoiceForm = () => {
                 className="text-sm font-bold md:text-base"
                 htmlFor="discount"
               >
-                Discount rate:
+                Paid Amount:
               </label>
               <div className="flex items-center">
                 <input
@@ -267,11 +277,11 @@ const InvoiceForm = () => {
                   min="0"
                   step="0.01"
                   placeholder="0.0"
-                  value={discount}
-                  onChange={(event) => setDiscount(event.target.value)}
+                  value={paid}
+                  onChange={(event) => setPaid(event.target.value)}
                 />
                 <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm">
-                  %
+                  $
                 </span>
               </div>
             </div>

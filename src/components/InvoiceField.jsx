@@ -4,6 +4,7 @@ const InvoiceField = ({ onEditItem, cellData }) => {
   return (
     <input
       className={cellData.className}
+      disabled={cellData.disabled}
       type={cellData.type}
       placeholder={cellData.placeholder}
       min={cellData.min}

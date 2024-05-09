@@ -162,23 +162,24 @@ const InvoiceModal = ({
                   <div className="mt-4 flex flex-col items-end space-y-2">
                     <div className="flex w-full justify-between border-t border-black/10 pt-2">
                       <span className="font-bold">Subtotal:</span>
-                      <span>${invoiceInfo.subtotal.toFixed(2)}</span>
+                      <span>Tk. {invoiceInfo.subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex w-full justify-between">
-                      <span className="font-bold">Discount:</span>
-                      <span>${invoiceInfo.discountRate.toFixed(2)}</span>
+                      <span className="font-bold">Delivery Charge:</span>
+                      <span>Tk. {isNaN(invoiceInfo.deliCharge) ? "0.00" : invoiceInfo.deliCharge.toFixed(2)}</span>
                     </div>
                     <div className="flex w-full justify-between">
-                      <span className="font-bold">Tax:</span>
-                      <span>${invoiceInfo.taxRate.toFixed(2)}</span>
+                      <span className="font-bold">Total:</span>
+                      <span>{isNaN(invoiceInfo.total) ? "0.00" : invoiceInfo.total.toFixed(2)} BDT</span>
+                    </div>
+                    <div className="flex w-full justify-between">
+                      <span className="font-bold">Paid Amount:</span>
+                      <span>{isNaN(invoiceInfo.paidAmount) ? "0.00" : invoiceInfo.paidAmount.toFixed(2)} BDT</span>
                     </div>
                     <div className="flex w-full justify-between border-t border-black/10 py-2">
-                      <span className="font-bold">Total:</span>
+                      <span className="font-bold">Due:</span>
                       <span className="font-bold">
-                        $
-                        {invoiceInfo.total % 1 === 0
-                          ? invoiceInfo.total
-                          : invoiceInfo.total.toFixed(2)}
+                        ${isNaN(invoiceInfo.due) ? "0.00" :  invoiceInfo.due % 1 === 0? invoiceInfo.due: invoiceInfo.due.toFixed(2)} BDT
                       </span>
                     </div>
                   </div>
