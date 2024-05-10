@@ -87,8 +87,8 @@ const InvoiceForm = () => {
   
   const deliCharge = parseInt(deliveryCharge);
   const paidAmount = parseInt(paid);
-  const total = subtotal + deliCharge;
-  const due = total - paidAmount;
+  const total = isNaN(deliCharge) ? subtotal : subtotal + deliCharge;
+  const due = isNaN(paidAmount) ? total : total - paidAmount;
 
   return (
     <form
@@ -210,7 +210,7 @@ const InvoiceForm = () => {
           <div className="flex w-full justify-between border-t border-gray-900/10 pt-2 md:w-1/2">
             <span className="font-bold">Due:</span>
             <span className="font-bold">
-              ${isNaN(due) ? "0.00" : due.toFixed(2)}
+              ${isNaN(due) ? "0.00" : due.toFixed(0)}
             </span>
           </div>
         </div>
