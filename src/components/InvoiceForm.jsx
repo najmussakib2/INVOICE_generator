@@ -12,6 +12,8 @@ const today = date.toLocaleDateString('en-GB', {
 
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [note, setNote] = useState('');
   const [deliveryCharge, setDeliveryCharge] = useState('');
   const [paid, setPaid] = useState('');
   const [invoiceNumber, setInvoiceNumber] = useState(1);
@@ -25,6 +27,10 @@ const InvoiceForm = () => {
       price: '1.00',
     },
   ]);
+
+    const toggleVisibility = () => {
+      setIsVisible(!isVisible);
+    };
 
   const reviewInvoiceHandler = (event) => {
     event.preventDefault();
@@ -192,19 +198,17 @@ const InvoiceForm = () => {
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Delivery Charge:</span>
             <span>
-              ${isNaN(deliCharge) ? "0.00" :deliCharge.toFixed(2) || "0.00"}
+              ${isNaN(deliCharge) ? "0.00" : deliCharge.toFixed(2) || "0.00"}
             </span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Total:</span>
-            <span>
-              ${isNaN(total) ? "0.00" : total.toFixed(2)}
-            </span>
+            <span>${isNaN(total) ? "0.00" : total.toFixed(2)}</span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Paid Amount:</span>
             <span>
-              ${isNaN(paidAmount) ? "0.00" :paidAmount.toFixed(2) || "0.00"}
+              ${isNaN(paidAmount) ? "0.00" : paidAmount.toFixed(2) || "0.00"}
             </span>
           </div>
           <div className="flex w-full justify-between border-t border-gray-900/10 pt-2 md:w-1/2">
@@ -235,6 +239,7 @@ const InvoiceForm = () => {
               due,
               deliCharge,
               total,
+              note,
             }}
             items={items}
             onAddNextInvoice={addNextInvoiceHandler}
@@ -283,6 +288,29 @@ const InvoiceForm = () => {
                 <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm">
                   $
                 </span>
+              </div>
+            </div>
+
+            <div className="py-5 text-right">
+              <div className="space-y-4">
+                <a
+                  href="/#"
+                  onClick={toggleVisibility}
+                  className="rounded-md bg-blue-300 px-3 py-1 text-xs text-white"
+                >
+                  add a note
+                </a>
+                {isVisible && (
+                  <textarea
+                    className="bg-white"
+                    value={note}
+                    onChange={(event) => setNote(event.target.value)}
+                    rows={5}
+                    cols={50}
+                    placeholder="Type something here..."
+                    // Add any additional props or styling as needed
+                  />
+                )}
               </div>
             </div>
           </div>

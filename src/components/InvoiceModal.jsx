@@ -125,9 +125,9 @@ const today = date.toLocaleDateString("en-GB", {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="my-8 inline-block w-full max-w-4xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
+            <div className="my-8 inline-block w-full max-w-2xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
               <div className="p-4" id="print">
-                <div className="grid grid-cols-3 mx-5">
+                <div className="mx-5 grid grid-cols-3">
                   <div className="col-span-1">
                     <h1 className="text-4xl font-bold">evaly</h1>
                     <p className="text-xs">House # 8, Road # 14</p>
@@ -143,7 +143,7 @@ const today = date.toLocaleDateString("en-GB", {
                   <div className="col-span-1 text-right">
                     <h1 className="text-3xl font-bold">INVOICE</h1>
                     <p>#EVL1958308COD</p>
-                    
+
                     <p className="text-xs">Date: {today}</p>
                     <p>Bill From</p>
                     <div className="w-ful flex justify-end">
@@ -186,42 +186,6 @@ const today = date.toLocaleDateString("en-GB", {
                   </table>
                 </div>
                 <div className="mt-6">
-                  {/* <div className="mb-4 grid grid-cols-2">
-                    <span className="font-bold">Invoice Number:</span>
-                    <span>{invoiceInfo.invoiceNumber}</span>
-                    <span className="font-bold">Cashier:</span>
-                    <span>{invoiceInfo.cashierName}</span>
-                    <span className="font-bold">Customer:</span>
-                    <span>{invoiceInfo.customerName}</span>
-                  </div> */}
-
-                  {/* <table className="w-full text-left">
-                    <thead>
-                      <tr className="border-y border-black/10 text-sm md:text-base">
-                        <th>ITEM</th>
-                        <th className="text-center">QTY</th>
-                        <th className="text-right">PRICE</th>
-                        <th className="text-right">AMOUNT</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items.map((item) => (
-                        <tr key={item.id}>
-                          <td className="w-full">{item.name}</td>
-                          <td className="min-w-[50px] text-center">
-                            {item.qty}
-                          </td>
-                          <td className="min-w-[80px] text-right">
-                            ${Number(item.price).toFixed(2)}
-                          </td>
-                          <td className="min-w-[90px] text-right">
-                            ${Number(item.price * item.qty).toFixed(2)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table> */}
-
                   <div className="mt-10 mr-5 ml-auto flex max-w-xs flex-col items-end space-y-2">
                     <div className="flex w-full justify-between pt-10">
                       <span className="font-bold">Subtotal:</span>
@@ -266,6 +230,9 @@ const today = date.toLocaleDateString("en-GB", {
                       </span>
                     </div>
                   </div>
+                </div>
+                <div className="mt-16 text-center text-xs text-red-400">
+                  <h1>**{invoiceInfo.note}**</h1>
                 </div>
               </div>
               <div className="mt-4 flex space-x-2 px-4 pb-6">
