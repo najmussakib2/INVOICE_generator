@@ -4,10 +4,11 @@ import InvoiceItem from './InvoiceItem';
 import InvoiceModal from './InvoiceModal';
 import incrementString from '../helpers/incrementString';
 const date = new Date();
-const today = date.toLocaleDateString('en-GB', {
-  month: 'numeric',
-  day: 'numeric',
-  year: 'numeric',
+const today = date.toLocaleDateString("en-GB", {
+  month: "numeric",
+  day: "numeric",
+  year: "numeric",
+  
 });
 
 const InvoiceForm = () => {
@@ -19,6 +20,8 @@ const InvoiceForm = () => {
   const [invoiceNumber, setInvoiceNumber] = useState(1);
   const [cashierName, setCashierName] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
   const [items, setItems] = useState([
     {
       id: uid(6),
@@ -96,6 +99,8 @@ const InvoiceForm = () => {
   const total = isNaN(deliCharge) ? subtotal : subtotal + deliCharge;
   const due = isNaN(paidAmount) ? total : total - paidAmount;
 
+
+
   return (
     <form
       className="relative flex flex-col px-2 md:flex-row"
@@ -125,39 +130,79 @@ const InvoiceForm = () => {
           </div>
         </div>
         <h1 className="text-center text-lg font-bold">INVOICE</h1>
-        <div className="grid grid-cols-2 gap-2 pt-4 pb-8">
-          <label
-            htmlFor="cashierName"
-            className="text-sm font-bold sm:text-base"
-          >
-            Cashier:
-          </label>
-          <input
-            required
-            className="flex-1"
-            placeholder="Cashier name"
-            type="text"
-            name="cashierName"
-            id="cashierName"
-            value={cashierName}
-            onChange={(event) => setCashierName(event.target.value)}
-          />
-          <label
-            htmlFor="customerName"
-            className="col-start-2 row-start-1 text-sm font-bold md:text-base"
-          >
-            Customer:
-          </label>
-          <input
-            required
-            className="flex-1"
-            placeholder="Customer name"
-            type="text"
-            name="customerName"
-            id="customerName"
-            value={customerName}
-            onChange={(event) => setCustomerName(event.target.value)}
-          />
+        <div className="grid grid-cols-2 gap-5 pt-4 pb-8">
+          <div>
+            <label
+              htmlFor="cashierName"
+              className="text-sm font-bold sm:text-base"
+            >
+              Cashier Name:
+            </label>
+            <input
+              required
+              className="flex-1"
+             
+              type="text"
+              name="cashierName"
+              id="cashierName"
+              value={cashierName}
+              onChange={(event) => setCashierName(event.target.value)}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="customerName"
+              className="col-start-2 row-start-1 text-sm font-bold md:text-base"
+            >
+              Customer Name:
+            </label>
+            <input
+              required
+              className="flex-1"
+              
+              type="text"
+              name="customerName"
+              id="customerName"
+              value={customerName}
+              onChange={(event) => setCustomerName(event.target.value)}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="customerName"
+              className="col-start-2 row-start-1 text-sm font-bold md:text-base"
+            >
+              Customer Phone:
+            </label>
+            <input
+              required
+              className="flex-1"
+             
+              type="number"
+              name="customerName"
+              id="customerName"
+              value={customerPhone}
+              onChange={(event) => setCustomerPhone(event.target.value)}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="customerName"
+              className="col-start-2 row-start-1 text-sm font-bold md:text-base"
+            >
+              Customer Address:
+            </label>
+            <input
+              required
+              className="flex-1"
+              
+              type="text"
+              name="customerName"
+              id="customerName"
+              value={customerAddress}
+              onChange={(event) => setCustomerAddress(event.target.value)}
+            />
+          </div>
         </div>
         <table className="w-full p-4 text-left">
           <thead>
@@ -193,28 +238,28 @@ const InvoiceForm = () => {
         <div className="flex flex-col items-end space-y-2 pt-6">
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Subtotal:</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>Tk. {subtotal.toFixed(2)}</span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Delivery Charge:</span>
             <span>
-              ${isNaN(deliCharge) ? "0.00" : deliCharge.toFixed(2) || "0.00"}
+              Tk. {isNaN(deliCharge) ? "0.00" : deliCharge.toFixed(2) || "0.00"}
             </span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Total:</span>
-            <span>${isNaN(total) ? "0.00" : total.toFixed(2)}</span>
+            <span>Tk. {isNaN(total) ? "0.00" : total.toFixed(2)}</span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Paid Amount:</span>
             <span>
-              ${isNaN(paidAmount) ? "0.00" : paidAmount.toFixed(2) || "0.00"}
+              Tk. {isNaN(paidAmount) ? "0.00" : paidAmount.toFixed(2) || "0.00"}
             </span>
           </div>
           <div className="flex w-full justify-between border-t border-gray-900/10 pt-2 md:w-1/2">
             <span className="font-bold">Due:</span>
             <span className="font-bold">
-              ${isNaN(due) ? "0.00" : due.toFixed(0)}
+              Tk. {isNaN(due) ? "0.00" : due.toFixed(0)}
             </span>
           </div>
         </div>
@@ -234,6 +279,8 @@ const InvoiceForm = () => {
               invoiceNumber,
               cashierName,
               customerName,
+              customerPhone,
+              customerAddress,
               subtotal,
               paidAmount,
               due,
@@ -296,7 +343,7 @@ const InvoiceForm = () => {
                 <a
                   href="/#"
                   onClick={toggleVisibility}
-                  className="rounded-md bg-blue-300 px-3 py-1 text-xs text-white"
+                  className="rounded-sm bg-blue-300 px-3 py-1 text-xs text-white hover:bg-blue-500"
                 >
                   add a note
                 </a>
