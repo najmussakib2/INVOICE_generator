@@ -108,7 +108,7 @@ const InvoiceModal = ({
           <div className="col-span-1">
             <div className="">
               <p>Bill From</p>
-              <img className="w-32" src={img} alt="" />
+              <img className="my-4 w-20" src={img} alt="" />
             </div>
 
             <h2 className=" text-2xl font-bold">{invoiceInfo.cashierName}</h2>
@@ -130,9 +130,9 @@ const InvoiceModal = ({
             <p className="text-xs">Date: {today}</p>
             <div className="flex justify-end">
               <Barcode
-                 width= {2}
-                 height= {50}
-                value={`#IP${invoiceInfo.invoiceNumber}COD`}
+                width={2}
+                height={50}
+                value={`#IP${generateSerialNumber()}COD`}
                 displayValue={false}
               />
             </div>
